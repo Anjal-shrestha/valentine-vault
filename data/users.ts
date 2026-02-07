@@ -30,7 +30,7 @@ export const usersData: Record<string, any> = {
  "gf-2027": {
     name: "Girlfriend name",
     pin: "0000",
-    partnerName: "Anjal",
+    partnerName: "bOYFRIEND NAME",
     startDate: "2023-08-24", 
     image: "/preeti.jpeg",
     
