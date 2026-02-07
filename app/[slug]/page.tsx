@@ -13,7 +13,16 @@ export default function UserVault({ params }: { params: Promise<{ slug: string }
   
   const [selectedDay, setSelectedDay] = useState<any>(null);
   const user = usersData[slug];
-
+useEffect(() => {
+  if (user && typeof window !== 'undefined') {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#ff4d6d', '#ff758f', '#ffb703']
+    });
+  }
+}, [slug, user]);
   // Trigger confetti only once when the user successfully enters the vault
   useEffect(() => {
     if (user) {
