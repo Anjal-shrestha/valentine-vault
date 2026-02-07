@@ -12,7 +12,9 @@ export const usersData: Record<string, any> = {
     name: "Preeti",
     pin: "0920",
     partnerName: "Anjal",
-    startDate: "2024-02-07",
+    startDate: "2023-08-24", 
+    image: "/preeti.jpeg",
+    
     theme: "rose",
     days: [
       { id: 1, title: "Rose Day", emoji: "🌹", message: "Today the world gives roses, but I'm giving you my heart. 730 days of us.", unlockDate: "2026-02-07" },
