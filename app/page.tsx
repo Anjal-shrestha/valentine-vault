@@ -36,7 +36,12 @@ export default function RomanticVaultEntry() {
   const router = useRouter();
   const controls = useAnimation();
 
-  const triggerHaptic = (p = 15) => navigator.vibrate && navigator.vibrate(p);
+ // This update allows both single vibrations and patterns
+const triggerHaptic = (p: number | number[] = 15) => {
+  if (typeof window !== "undefined" && navigator.vibrate) {
+    navigator.vibrate(p);
+  }
+};
 
   const handleKeyPress = (num: string) => {
     if (pin.length >= 4) return;
