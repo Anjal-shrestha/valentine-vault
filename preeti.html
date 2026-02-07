@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>For Preeti 🌹 | Rose Day 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose-light: #ffd6e0;
+      --rose-mid: #ffb3c6;
+      --rose: #e63946;
+      --rose-dark: #c1121f;
+      --sakura: rgba(230, 57, 70, 0.08);
+      --dark: #3a0a17;
+      --cream: #fff9fb;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at 30% 20%, var(--cream), var(--rose-light) 70%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark);
+      font-family: "Poppins", system-ui, sans-serif;
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    /* SOFT SAKURA PETALS (not roses!) */
+    .petals span {
+      position: absolute;
+      bottom: -40px;
+      font-size: 18px;
+      animation: floatUp linear forwards;
+      opacity: 0;
+      filter: drop-shadow(0 0 4px rgba(255,255,255,0.8));
+      color: var(--sakura);
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.9; }
+      90% { opacity: 0.9; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Memory Garden */
+    .garden {
+      position: fixed;
+      bottom: 15px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    .bud {
+      font-size: 16px;
+      opacity: 0.3;
+      transition: all 0.6s ease;
+    }
+
+    .bud.bloomed {
+      opacity: 1;
+      transform: scale(1.25);
+      text-shadow: 0 0 10px rgba(230, 57, 70, 0.5);
+    }
+
+    /* Screens */
+    .screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 250, 253, 0.92);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      touch-action: manipulation;
+    }
+
+    .screen.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .screen.hidden {
+      pointer-events: none;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 28px;
+      width: 94%;
+      max-width: 390px;
+      padding: 32px 26px;
+      text-align: center;
+      box-shadow: 
+        0 10px 35px rgba(74, 12, 28, 0.12),
+        0 0 25px rgba(230, 57, 70, 0.06);
+      position: relative;
+      z-index: 20;
+      border: 1px solid rgba(230, 57, 70, 0.1);
+      touch-action: manipulation;
+    }
+
+    h1 {
+      font-family: "Caveat", cursive;
+      font-size: 34px;
+      color: var(--rose-dark);
+      margin: 6px 0 4px;
+      letter-spacing: 0.5px;
+      line-height: 1.3;
+    }
+
+    .subhead {
+      color: var(--rose);
+      font-weight: 500;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 12px 0;
+      position: relative;
+    }
+
+    .highlight {
+      color: var(--rose-dark);
+      font-weight: 600;
+      position: relative;
+      display: inline-block;
+    }
+
+    .highlight:after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--rose);
+      border-radius: 2px;
+      opacity: 0.6;
+    }
+
+    .fade-line {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .fade-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .delay1 { transition-delay: 0.3s; }
+    .delay2 { transition-delay: 0.55s; }
+    .delay3 { transition-delay: 0.8s; }
+    .delay4 { transition-delay: 1.05s; }
+
+    /* BEAUTIFUL SVG ROSE (replaces emoji) */
+    .rose-svg {
+      width: 160px;
+      height: 160px;
+      margin: 20px auto;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .screen.active .rose-svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .rose-svg path, .rose-svg circle {
+      transform-origin: center;
+      transition: all 0.8s ease;
+    }
+
+    .screen.active .petal-path {
+      animation: gentlePulse 4s infinite;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .heartbeat {
+      animation: heartbeat 1.8s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0% { transform: scale(1); }
+      14% { transform: scale(1.1); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.1); }
+      70% { transform: scale(1); }
+    }
+
+    .hint {
+      margin-top: 22px;
+      font-size: 14px;
+      opacity: 0.75;
+      font-style: italic;
+      letter-spacing: 0.3px;
+      color: var(--dark);
+    }
+
+    .roseday-badge {
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(230, 57, 70, 0.06));
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 22px;
+      margin: 12px auto;
+      font-weight: 700;
+      color: var(--rose-dark);
+      font-size: 18px;
+      letter-spacing: 0.8px;
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      box-shadow: 0 2px 10px rgba(230, 57, 70, 0.08);
+    }
+
+    /* DAYS COUNTER (like your React example) */
+    .days-counter {
+      position: relative;
+      display: inline-block;
+      margin: 18px auto;
+      cursor: default;
+    }
+
+    .days-counter::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(45deg, #ff6b6b, #ffa5ab, #ff9e9e, #ff6b6b);
+      border-radius: 50%;
+      opacity: 0.25;
+      z-index: -1;
+      animation: pulseRing 3s infinite;
+    }
+
+    @keyframes pulseRing {
+      0% { transform: scale(0.9); opacity: 0.3; }
+      50% { transform: scale(1.1); opacity: 0.15; }
+      100% { transform: scale(0.9); opacity: 0.3; }
+    }
+
+    .days-badge {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 8px 24px;
+      border-radius: 50px;
+      border: 1.5px solid rgba(230, 57, 70, 0.25);
+      box-shadow: 0 4px 15px rgba(230, 57, 70, 0.12);
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--rose-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .days-badge span {
+      font-size: 15px;
+      font-weight: 500;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+    }
+
+    .secret-message {
+      position: absolute;
+      bottom: 22px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.6s ease;
+      font-style: italic;
+      color: var(--rose-dark);
+      font-weight: 500;
+      padding: 0 20px;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0.3px;
+    }
+
+    .secret-message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .signature {
+      margin-top: 26px;
+      font-family: "Caveat", cursive;
+      font-size: 29px;
+      color: var(--rose-dark);
+      letter-spacing: 1px;
+      line-height: 1.3;
+    }
+
+    .from-tattu {
+      font-family: "Caveat", cursive;
+      font-size: 25px;
+      color: var(--rose);
+      margin-top: 6px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .years {
+      font-size: 17px;
+      color: var(--dark);
+      opacity: 0.85;
+      margin-top: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .tomorrow-teaser {
+      margin-top: 26px;
+      font-size: 15px;
+      opacity: 0.82;
+      line-height: 1.6;
+      font-style: italic;
+      color: var(--rose-dark);
+      padding: 14px 18px;
+      background: rgba(255, 245, 247, 0.6);
+      border-radius: 18px;
+      border-left: 2.5px solid var(--rose);
+      letter-spacing: 0.3px;
+    }
+
+    /* Responsive - Mobile First */
+    @media (max-height: 680px) {
+      .box { 
+        padding: 28px 22px; 
+        border-radius: 26px;
+      }
+      .rose-svg { 
+        width: 145px; 
+        height: 145px; 
+        margin: 18px auto;
+      }
+      h1 { 
+        font-size: 30px; 
+      }
+      .days-badge {
+        font-size: 19px;
+        padding: 7px 22px;
+      }
+      .signature { 
+        font-size: 26px; 
+        margin-top: 22px;
+      }
+      .from-tattu { 
+        font-size: 23px; 
+      }
+      .garden { 
+        bottom: 12px; 
+        gap: 9px; 
+      }
+      .bud { 
+        font-size: 15px; 
+      }
+    }
+
+    @media (max-width: 370px) {
+      .box { 
+        width: 95%; 
+        padding: 26px 20px; 
+      }
+      .rose-svg { 
+        width: 140px; 
+        height: 140px; 
+      }
+      h1 { 
+        font-size: 28px; 
+      }
+      p { 
+        font-size: 15px; 
+      }
+      .days-badge {
+        font-size: 18px;
+        padding: 6px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="petals"></div>
+  <div class="garden">
+    <div class="bud" id="bud1">🌹</div>
+    <div class="bud" id="bud2">🌹</div>
+    <div class="bud" id="bud3">🌹</div>
+    <div class="bud" id="bud4">🌹</div>
+  </div>
+
+  <!-- SCREEN 1 – ROSE DAY GREETING -->
+  <div class="screen active" id="s1" onclick="next(1)">
+    <div class="box">
+      <div class="roseday-badge">🌹 Rose Day • February 7, 2026 🌹</div>
+      <h1>My Dearest Preeti</h1>
+      <p class="fade-line delay1">Today the world gives roses...</p>
+      <p class="fade-line delay2">But I'm giving you my heart —</p>
+      <p class="fade-line delay3">...just like I have for <span class="highlight">730 days straight</span>.</p>
+      <div class="hint">(tap to receive my rose)</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 – THE ROSE (SVG) -->
+  <div class="screen hidden" id="s2" onclick="next(2)">
+    <div class="box">
+      <svg class="rose-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="roseGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff6b8b" />
+            <stop offset="100%" stop-color="#c1121f" />
+          </radialGradient>
+          <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+        <!-- Stem -->
+        <path d="M50 95 C52 75 48 60 50 35" fill="none" stroke="#2d5d36" stroke-width="2.2" stroke-linecap="round" />
+        <!-- Leaf -->
+        <path d="M50 75 Q32 72 36 58 Q46 62 50 75" fill="#3a7d44" opacity="0.9" class="leaf-path" />
+        <!-- Outer Petals -->
+        <path d="M50 40 C30 40 25 15 50 10 C75 15 70 40 50 40" fill="url(#roseGrad)" filter="url(#softGlow)" class="petal-path" />
+        <!-- Inner Petals -->
+        <circle cx="50" cy="28" r="9" fill="#e63946" opacity="0.85" />
+        <path d="M50 35 C40 35 35 25 50 20 C65 25 60 35 50 35" fill="#ff8fa3" opacity="0.95" />
+      </svg>
+      <p class="fade-line delay1">Preeti,</p>
+      <p class="fade-line delay2">This rose isn't just for Rose Day.</p>
+      <p class="fade-line delay3 heartbeat">It's for every morning I woke up grateful it's you.</p>
+      <div class="hint">(tap gently)</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3 – OUR STORY + COUNTER -->
+  <div class="screen hidden" id="s3" onclick="next(3)">
+    <div class="box">
+      <svg class="rose-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="roseGrad2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff6b8b" />
+            <stop offset="100%" stop-color="#c1121f" />
+          </radialGradient>
+          <filter id="softGlow2" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="1.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+        <path d="M50 95 C52 75 48 60 50 35" fill="none" stroke="#2d5d36" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M50 75 Q32 72 36 58 Q46 62 50 75" fill="#3a7d44" opacity="0.9" />
+        <path d="M50 40 C30 40 25 15 50 10 C75 15 70 40 50 40" fill="url(#roseGrad2)" filter="url(#softGlow2)" class="petal-path" />
+        <circle cx="50" cy="28" r="9" fill="#e63946" opacity="0.85" />
+        <path d="M50 35 C40 35 35 25 50 20 C65 25 60 35 50 35" fill="#ff8fa3" opacity="0.95" />
+      </svg>
+      <p class="fade-line delay1">Two years with you, Preeti...</p>
+      <p class="fade-line delay2">You turned ordinary days into magic.</p>
+      <p class="fade-line delay3">You turned my heart into a home.</p>
+      
+      <div class="days-counter">
+        <div class="days-badge">730 <span>Days of Us</span></div>
+      </div>
+      
+      <p class="fade-line delay4 heartbeat">And today — Rose Day — I celebrate <span class="highlight">us</span>.</p>
+      <div class="hint">(tap to see my promise)</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4 – PROMISE -->
+  <div class="screen hidden" id="s4" onclick="next(4)">
+    <div class="box">
+      <p class="fade-line delay1">Preeti, I promise you this:</p>
+      <p class="fade-line delay2">Not just roses on Rose Day...</p>
+      <p class="fade-line delay3">But my love on <span class="highlight">every single day</span>.</p>
+      <p class="fade-line delay4 heartbeat">Through storms and sunshine — I choose you.</p>
+      <div class="hint">(hold the next rose for 3 seconds ❤️)</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5 – SECRET GESTURE -->
+  <div class="screen hidden" id="s5">
+    <div class="box" id="rose-screen">
+      <svg class="rose-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="roseGrad3" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff6b8b" />
+            <stop offset="100%" stop-color="#c1121f" />
+          </radialGradient>
+          <filter id="softGlow3" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+        <path d="M50 95 C52 75 48 60 50 35" fill="none" stroke="#2d5d36" stroke-width="2.2" stroke-linecap="round" />
+        <path d="M50 75 Q32 72 36 58 Q46 62 50 75" fill="#3a7d44" opacity="0.9" />
+        <path d="M50 40 C30 40 25 15 50 10 C75 15 70 40 50 40" fill="url(#roseGrad3)" filter="url(#softGlow3)" class="petal-path" />
+        <circle cx="50" cy="28" r="9" fill="#e63946" opacity="0.85" />
+        <path d="M50 35 C40 35 35 25 50 20 C65 25 60 35 50 35" fill="#ff8fa3" opacity="0.95" />
+      </svg>
+      <p class="fade-line delay1">Preeti...</p>
+      <p class="fade-line delay2">This rose holds my secret truth:</p>
+      <div class="secret-message" id="secret">"You are the first thought in my morning and the last whisper in my night. Always."</div>
+      <div class="hint">(hold me close)</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 6 – TOMORROW TEASER (PERFECT ENDING) -->
+  <div class="screen hidden" id="s6">
+    <div class="box">
+      <div class="roseday-badge">🌹 Happy Rose Day, My Love 🌹</div>
+      <p class="fade-line delay1">To Preeti —</p>
+      <p class="fade-line delay2">The girl who made my heart bloom.</p>
+      <p class="fade-line delay3">Today and every day after.</p>
+      <div class="signature">Forever Yours</div>
+      <div class="from-tattu">— Tattu ❤️</div>
+      <div class="years">2 years down. A lifetime to go.</div>
+      <div class="tomorrow-teaser fade-line delay4">
+        This garden grows with us...<br>
+        <span style="display:inline-block;margin-top:4px">Come back tomorrow, my love.</span><br>
+        <span style="font-size:18px;margin-top:2px">🌹✨</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create SOFT SAKURA PETALS (not roses!)
+    const petalWrap = document.querySelector(".petals");
+    function createPetal() {
+      const p = document.createElement("span");
+      p.textContent = "🌸"; // Sakura blossom!
+      p.style.left = Math.random() * 100 + "vw";
+      p.style.animationDuration = 7 + Math.random() * 6 + "s";
+      p.style.fontSize = 14 + Math.random() * 6 + "px";
+      p.style.opacity = 0.6 + Math.random() * 0.25;
+      petalWrap.appendChild(p);
+      setTimeout(() => p.remove(), 13000);
+    }
+    setInterval(createPetal, 800); // Fewer petals, softer effect
+
+    // Bloom garden as we progress
+    function bloomGarden(step) {
+      if (step >= 1) document.getElementById('bud1').classList.add('bloomed');
+      if (step >= 2) document.getElementById('bud2').classList.add('bloomed');
+      if (step >= 3) document.getElementById('bud3').classList.add('bloomed');
+      if (step >= 4) document.getElementById('bud4').classList.add('bloomed');
+    }
+
+    // Secret hold gesture
+    let holdTimer;
+    const roseScreen = document.getElementById('rose-screen');
+    
+    function startHold(e) {
+      if (e.touches && e.touches.length > 1) return;
+      e.preventDefault();
+      holdTimer = setTimeout(() => {
+        document.getElementById('secret').classList.add('show');
+        setTimeout(() => {
+          document.getElementById('s5').classList.add('hidden');
+          document.getElementById('s6').classList.add('active');
+          bloomGarden(4);
+          if (navigator.vibrate) navigator.vibrate([70, 30, 70]);
+        }, 1400);
+      }, 2800);
+    }
+
+    function cancelHold() {
+      clearTimeout(holdTimer);
+    }
+
+    roseScreen.addEventListener('touchstart', startHold, { passive: false });
+    roseScreen.addEventListener('mousedown', startHold);
+    roseScreen.addEventListener('touchend', cancelHold);
+    roseScreen.addEventListener('mouseup', cancelHold);
+    roseScreen.addEventListener('touchcancel', cancelHold);
+    roseScreen.addEventListener('mouseleave', cancelHold);
+
+    // Progress through screens
+    function next(n) {
+      document.getElementById("s" + n).classList.remove("active");
+      document.getElementById("s" + n).classList.add("hidden");
+      
+      if (n < 5) {
+        const nextScreen = document.getElementById("s" + (n + 1));
+        nextScreen.classList.remove("hidden");
+        nextScreen.classList.add("active");
+        bloomGarden(n);
+        
+        setTimeout(() => {
+          document.querySelectorAll("#s" + (n + 1) + " .fade-line").forEach((el, i) => {
+            setTimeout(() => el.classList.add("visible"), 200 + i * 220);
+          });
+        }, 150);
+        
+        if (navigator.vibrate) navigator.vibrate(25);
+      }
+    }
+
+    // Initialize first screen
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.querySelectorAll("#s1 .fade-line").forEach((el, i) => {
+          setTimeout(() => el.classList.add("visible"), 300 + i * 250);
+        });
+      }, 250);
+      
+      // Prevent zoom on mobile
+      document.addEventListener('touchmove', e => {
+        if (e.scale !== 1) e.preventDefault();
+      }, { passive: false });
+      
+      // Disable double-tap zoom
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', e => {
+        const now = Date.now();
+        if (now - lastTouchEnd <= 300) e.preventDefault();
+        lastTouchEnd = now;
+      }, false);
+    });
+  </script>
+</body>
+</html>
